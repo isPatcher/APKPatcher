@@ -89,10 +89,10 @@ public class Patch {
                     new ImmutableInstruction11n(Opcode.CONST_4, 0, 0),
                     // new-array v0, v0, [Ljava/security/cert/X509Certificate;
                     new ImmutableInstruction22c(
-                            Opcode.NEW_ARRAY, 0, 0,
-                            new ImmutableTypeReference(
-                                    "[Ljava/security/cert/X509Certificate;"
-                            )
+                        Opcode.NEW_ARRAY, 0, 0,
+                        new ImmutableTypeReference(
+                            "[Ljava/security/cert/X509Certificate;"
+                        )
                     ),
                     // return-object v0
                     new ImmutableInstruction11x(Opcode.RETURN_OBJECT, 0)

@@ -30,7 +30,9 @@ public class Patcher {
             /* Patch dex */
             for (DexFileInputSource source : module.listDexFiles()) {
                 if (source == null) continue;
+
                 byte[] dexBytes;
+
                 try (InputStream inputStream = source.openStream()) {
                     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
                     byte[] buffer = new byte[8192];
@@ -63,6 +65,8 @@ public class Patcher {
                     throw mFirstError.get();
                 }
             }
+        } catch (Exception e) {
+            Log.e("[ERROR]", "Patching failed: " + e.getMessage());
         } finally {
             if (worker != null) {
                 worker.shutdownNow();

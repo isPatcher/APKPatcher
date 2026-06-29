@@ -103,7 +103,6 @@ public class Merger extends CommandExecutor {
         fixFilePermissions(archive);
         Predicate <ArchiveEntry> filter = archiveEntry -> archiveEntry.getName().endsWith(".apk");
         int count = archive.extractAll(tmp, filter, this);
-        //int count = archive.extractAll(tmp, filter, null);
         archive.close();
         if (count == 0) {
             throw new IOException("No *.apk files found on: " + file);
@@ -156,10 +155,10 @@ public class Merger extends CommandExecutor {
         }
 
         List<String> activitiesToRemove = Collections.singletonList(
-                "com.apkpatcher.licensecheck.LicenseActivity"
+                "com.pairip.licensecheck.LicenseActivity"
         );
         List<String> providersToRemove = Collections.singletonList(
-                "com.apkpatcher.licensecheck.LicenseContentProvider"
+                "com.pairip.licensecheck.LicenseContentProvider"
         );
         List<String> permissionsToRemove = Collections.singletonList(
                 "com.android.vending.CHECK_LICENSE"

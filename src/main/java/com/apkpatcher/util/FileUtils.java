@@ -1,20 +1,8 @@
 package com.apkpatcher.util;
 
-import com.reandroid.apk.ApkModule;
-import com.reandroid.archive.WriteProgress;
-
 import java.io.File;
-import java.io.IOException;
 
 public class FileUtils {
-
-    public static void tempFile() {
-        File tempDir = new File(System.getProperty("java.io.tmpdir"));
-        if (!tempDir.exists()) {
-            tempDir.mkdirs();
-        }
-        //return tempDir;
-    }
 
     public static File generateOutputFromInput(File file, String suffix) {
         String name = file.getName();
@@ -30,19 +18,5 @@ public class FileUtils {
             return new File(name);
         }
         return new File(dir, name);
-    }
-
-    public static void deleteDirectory(File directory) {
-        File[] files = directory.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                if (file.isDirectory()) {
-                    deleteDirectory(file);
-                } else {
-                    file.delete();
-                }
-            }
-        }
-        directory.delete();
     }
 }

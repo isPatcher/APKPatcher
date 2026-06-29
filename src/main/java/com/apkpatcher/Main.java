@@ -82,12 +82,7 @@ public class Main {
 
             Detector.isFlutter(module);
             XMLPatcher.addNSC(module);
-
-            try {
-                Patcher.patch(module);
-            } catch (Exception e) {
-                Log.e("[ERROR]", "Patching failed: " + e.getMessage());
-            }
+            Patcher.patch(module);
 
             File patchedApk = FileUtils.generateOutputFromInput(inputApk, "_Patched.apk");
 

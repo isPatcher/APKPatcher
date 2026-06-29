@@ -22,8 +22,8 @@ public class banner {
     public static String b64ToString(String b64) {
     try {
         return new String(
-                Base64.getDecoder().decode(b64),
-                StandardCharsets.UTF_8
+            Base64.getDecoder().decode(b64),
+            StandardCharsets.UTF_8
         );
     } catch (IllegalArgumentException e) {
         e.printStackTrace();

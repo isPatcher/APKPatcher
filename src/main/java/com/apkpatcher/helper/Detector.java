@@ -11,36 +11,41 @@ import java.io.IOException;
 
 public class Detector {
 
-    public static void isFlutter(ApkModule module) throws IOException {
+    public static void isFlutter(ApkModule module) {
 
-        for (InputSource inputSource : module.listNativeLibraryFiles()) {
+        try {
 
-            String name = inputSource.getAlias();
+            for (InputSource inputSource : module.listNativeLibraryFiles()) {
 
-            if (name != null && name.startsWith("lib/") && name.endsWith("/libflutter.so")) {
+                String name = inputSource.getAlias();
 
-                String arch = name.substring(4, name.indexOf('/', 4));
+                if (name != null && name.startsWith("lib/") && name.endsWith("/libflutter.so")) {
 
-                Log.o("[INFO]", "Patching Flutter SSL...");
-                Log.o("[INFO]", "Flutter : libflutter.so ✓");
-                Log.i("[INFO]", "Arch : " + arch);
-                Log.i("[INFO]", "Patching : " + name);
+                    String arch = name.substring(4, name.indexOf('/', 4));
 
-                byte[] originalBytes = inputSource.openStream().readAllBytes();
+                    Log.o("[INFO]", "Patching Flutter SSL...");
+                    Log.o("[INFO]", "Flutter : libflutter.so ✓");
+                    Log.i("[INFO]", "Arch : " + arch);
+                    Log.i("[INFO]", "Patching : " + name);
 
-                if (FlutterSSL.patchLibrary(originalBytes, arch)) {
+                    byte[] originalBytes = inputSource.openStream().readAllBytes();
 
-                    synchronized (module) {
-                        module.removeInputSource(name);
-                        module.add(
-                            new ByteInputSource(
-                                originalBytes,
-                                name
-                            )
-                        );
+                    if (FlutterSSL.patchLibrary(originalBytes, arch)) {
+
+                        synchronized (module) {
+                            module.removeInputSource(name);
+                            module.add(
+                                new ByteInputSource(
+                                    originalBytes,
+                                    name
+                                )
+                            );
+                        }
                     }
                 }
             }
+        } catch (IOException e) {
+            Log.e("[ERROR]", "Flutter patch failed: " + e.getMessage());
         }
     }
 }

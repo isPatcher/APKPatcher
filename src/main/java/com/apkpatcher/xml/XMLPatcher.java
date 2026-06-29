@@ -22,6 +22,7 @@ public class XMLPatcher {
 
         TableBlock table = apkModule.getTableBlock();
         PackageBlock pkg = table.pickOne();
+
         if (pkg == null) {
             Log.e("[ERROR]", "No package found in TableBlock!");
             return;
@@ -31,7 +32,8 @@ public class XMLPatcher {
 
         /* --- Add Certificate in raw */
         /* The default certificate is from HttpCanary modified by Techno India. */
-        String default_certificate = """
+        String default_certificate =
+"""
 -----BEGIN CERTIFICATE-----
 MIIDczCCAlugAwIBAgIHALdlRG+pDzANBgkqhkiG9w0BAQ0FADBHMRswGQYDVQQD
 DBJIdHRwQ2FuYXJ5IFJvb3QgQ0ExEzARBgNVBAoMCkh0dHBDYW5hcnkxEzARBgNV
@@ -66,7 +68,8 @@ OBoyS7CMCG66aSfs3zk4lT8fVwtFJjvkM01gH3A4q6T78rZ/Nkx01GC90Y1+xDAW
         /* --- Add Network Security Config in xml */
         String path = "res/xml/network_security_config.xml";
 
-        String xml = """
+        String xml =
+"""
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
     <domain-config cleartextTrafficPermitted="true">
@@ -99,7 +102,10 @@ OBoyS7CMCG66aSfs3zk4lT8fVwtFJjvkM01gH3A4q6T78rZ/Nkx01GC90Y1+xDAW
         apkModule.add(
             new XMLEncodeSource(
                 pkg,
-                new XMLStringParserSource(path, xml)
+                new XMLStringParserSource(
+                    path,
+                    xml
+                )
             )
         );
 
