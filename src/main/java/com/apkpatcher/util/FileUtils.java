@@ -8,6 +8,14 @@ import java.io.IOException;
 
 public class FileUtils {
 
+    public static void tempFile() {
+        File tempDir = new File(System.getProperty("java.io.tmpdir"));
+        if (!tempDir.exists()) {
+            tempDir.mkdirs();
+        }
+        //return tempDir;
+    }
+
     public static File generateOutputFromInput(File file, String suffix) {
         String name = file.getName();
         if (file.isFile()) {
@@ -22,14 +30,6 @@ public class FileUtils {
             return new File(name);
         }
         return new File(dir, name);
-    }
-
-    public static void write(ApkModule module, File file) throws IOException {
-        module.writeApk(file, new WriteProgress() {
-            @Override
-            public void onCompressFile(String path, int method, long length) {
-            }
-        });
     }
 
     public static void deleteDirectory(File directory) {

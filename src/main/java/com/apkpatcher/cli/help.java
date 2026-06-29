@@ -1,4 +1,4 @@
-package com.apkpatcher.ui;
+package com.apkpatcher.cli;
 
 public class help {
 

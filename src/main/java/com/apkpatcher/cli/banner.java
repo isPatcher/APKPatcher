@@ -1,4 +1,4 @@
-package com.apkpatcher.ui;
+package com.apkpatcher.cli;
 
 import java.nio.charset.StandardCharsets;
 import java.time.format.DateTimeFormatter;

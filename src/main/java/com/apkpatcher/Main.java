@@ -1,18 +1,16 @@
 package com.apkpatcher;
 
+import com.apkpatcher.cli.*;
 import com.apkpatcher.dex.Patcher;
+import com.apkpatcher.helper.Detector;
 import com.apkpatcher.merge.Merger;
-import com.apkpatcher.xml.XMLPatcher;
-import com.apkpatcher.ui.*;
 import com.apkpatcher.util.*;
+import com.apkpatcher.xml.XMLPatcher;
 
-import com.reandroid.apk.ApkBundle;
 import com.reandroid.apk.ApkModule;
 import com.reandroid.arsc.ARSCLib;
-import com.reandroid.archive.WriteProgress;
 
-import java.io.*;
-import java.nio.file.Files;
+import java.io.File;
 import java.util.Set;
 
 public class Main {
@@ -73,14 +71,16 @@ public class Main {
                 if (!mergedApkFile.exists()) {
                     return;
                 }
+
                 module = ApkModule.loadApkFile(mergedApkFile);
+
             } else {
                 Log.w("[WARN]", "Supported Extension : '.apk' & " + SPLIT_EXTENSIONS);
                 Log.e("[ERROR]", "UnSupported Extension : " + inputPath);
                 return;
             }
 
-            Log.i("[INFO]", "Patchng XMLs...");
+            Detector.isFlutter(module);
             XMLPatcher.addNSC(module);
 
             try {
@@ -92,10 +92,10 @@ public class Main {
             File patchedApk = FileUtils.generateOutputFromInput(inputApk, "_Patched.apk");
 
             Log.i("[BUILD]", "Building APK...");
-            FileUtils.write(module, patchedApk);
-            Log.i("[BUILD]", "APK built at: " + patchedApk.getAbsolutePath());
+            module.writeApk(patchedApk);
 
-            Log.i("[BUILD]", "Process completed");
+            Log.i("[BUILD]", "APK built at: " + patchedApk.getAbsolutePath());
+            Log.i("[BUILD]", "Process completed ✓");
             Log.i("[TIME]", Log.elapsedTime());
 
         } catch (Exception e) {

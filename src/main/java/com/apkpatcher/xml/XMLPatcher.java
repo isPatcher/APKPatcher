@@ -27,6 +27,8 @@ public class XMLPatcher {
             return;
         }
 
+        Log.i("[INFO]", "Patching XMLs...");
+
         /* --- Add Certificate in raw */
         /* The default certificate is from HttpCanary modified by Techno India. */
         String default_certificate = """
